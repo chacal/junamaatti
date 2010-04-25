@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="StationName" parent="@android:style/TextAppearance">
+        <item name="android:gravity">center</item>
+        <item name="android:background">#353AD4</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:padding">12sp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+      <style name="TimetableCell" parent="@android:style/TextAppearance">
+        <item name="android:gravity">center</item>
+        <item name="android:background">#ffffff</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:paddingLeft">14sp</item>
+        <item name="android:paddingRight">14sp</item>
+        <item name="android:paddingBottom">8sp</item>
+        <item name="android:paddingTop">8sp</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+</resources>
