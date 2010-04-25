@@ -1,10 +1,14 @@
 package fi.jihartik.androidtest
 
 import android.os.Bundle
-import android.app.ListActivity
-import android.content.Context
 import android.view.{LayoutInflater, ViewGroup, View, Window}
-import android.widget.{TableLayout, ListView, ArrayAdapter, TextView}
+import scala.collection.jcl.Conversions._
+import android.widget._
+import android.app.{AlertDialog, ListActivity}
+import android.location.{Address, Geocoder, Location, LocationManager}
+import android.content.{DialogInterface, Context}
+import java.util.Locale
+import scala.None
 
 class MainActivity extends ListActivity with HttpUtils with ProgressDialogs {
 
@@ -12,16 +16,47 @@ class MainActivity extends ListActivity with HttpUtils with ProgressDialogs {
     super.onCreate(savedInstanceState)
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.main)
-
     setListAdapter(new TimetableListAdapter(this, R.id.station_name))
 
+    withProgressAndResult("Getting location...") {
+      getCurrentAddress
+    } { address =>
+      address match {
+        case Some(_) => showTimetable(address.get)
+        case _ => showLocationFailedMessage
+      }
+    }
+  }
+
+  def getCurrentAddress = {
+    try {
+      val loc = getSystemService(Context.LOCATION_SERVICE).asInstanceOf[LocationManager].getLastKnownLocation("network")
+      new Geocoder(this).getFromLocation(loc.getLatitude, loc.getLongitude, 1).toList.firstOption
+    } catch {
+      case _ => None
+    }
+  }
+
+  def showTimetable(addr: Address) {
     withProgressAndResult("Loading timetable...") {
-      val data = httpGet("http://www.omatlahdot.fi/omatlahdot/web?stopid=E1058&command=quicksearch&view=mobile")
+      val data = httpGet("http://www.omatlahdot.fi/omatlahdot/web?stopid=" + resolveStopId(addr) + "&command=quicksearch&view=mobile")
       new TimetableParser().parse(data)
     } { table =>
       findViewById(R.id.station_name).asInstanceOf[TextView].setText(table.station.name)
       val adapter = getListAdapter.asInstanceOf[TimetableListAdapter]
       table.rows.foreach(adapter.add)
+    }
+  }
+
+  def showLocationFailedMessage {
+    val builder = new AlertDialog.Builder(this).setMessage("Location not available.")
+    builder.setNeutralButton("OK", null).show
+  }
+
+  def resolveStopId(addr: Address) = {
+    addr.getLocality.contains("Espoo") match {
+      case true => "E1058"  // Leppävaara/VR
+      case false => "0070"  // Helsinki/VR
     }
   }
 }
