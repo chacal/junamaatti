@@ -1,15 +1,22 @@
-import sbt.{ProjectInfo, DefaultProject}
+import sbt.{ProjectInfo, DefaultProject, ParentProject}
 
-class Project(info: ProjectInfo) extends AndroidProject(info) with IdeaPlugin {
-  def androidPlatformName = "android-7"
+class Project(info: ProjectInfo) extends ParentProject(info) with IdeaPlugin {
 
-  override def useMavenConfigurations = true
   override def shouldCheckOutputDirectories = false
 
-  val commonsIO = "commons-io" % "commons-io" % "1.4" withSources()
-  val specs = "org.scala-tools.testing" % "specs" % "1.6.2"
-//  override def updateAction = task { None }
+  lazy val androidclient = project("android-client", "android-client", new AndroidClientProject(_))
+  lazy val androidtests = project("android-tests", "android-tests", new AndroidTestsProject(_), androidclient)
 
-// Enable this if specialization causes harm (some known issues in 2.8.0.RC1).
-// override def compileOptions = super.compileOptions ++ Seq("-no-specialization").map(CompileOption(_))
+  class AndroidClientProject(info: ProjectInfo) extends AndroidProject(info) with CommonConfig {
+  }
+
+  class AndroidTestsProject(info: ProjectInfo) extends AndroidTestProject(info) with CommonConfig {
+    val specs = "org.scala-tools.testing" % "specs" % "1.6.2"
+  }
+}
+
+trait CommonConfig extends IdeaPlugin {
+  def androidPlatformName = "android-7"
+  val commonsIO = "commons-io" % "commons-io" % "1.4" withSources()
+  override def useMavenConfigurations = true
 }
