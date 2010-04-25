@@ -3,16 +3,7 @@
               android:orientation="vertical" android:layout_width="fill_parent"
               android:layout_height="fill_parent">
   <TextView android:id="@+id/station_name" style="@style/StationName"/>
-
-  <TableLayout android:orientation="horizontal" android:layout_height="fill_parent"
-               android:layout_width="fill_parent" android:stretchColumns="1">
-    <TableRow>
-      <TextView android:id="@+id/train" android:text="U" style="@style/TimetableCell"/>
-      <TextView android:id="@+id/time" android:text="14:33" style="@style/TimetableCell"/>
-      <TextView android:id="@+id/destination" android:text="Helsinki" style="@style/TimetableCell"/>
-    </TableRow>
-  </TableLayout>
-  <ListView android:id="@+id/item_list"
+  <ListView android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
