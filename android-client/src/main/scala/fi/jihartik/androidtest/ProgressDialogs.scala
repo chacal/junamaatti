@@ -1,9 +1,10 @@
 package fi.jihartik.androidtest
 
 import android.app.ProgressDialog
+import android.content.Context
 
 
-trait ProgressDialogs {
+trait ProgressDialogs extends Context {
   def withProgress(message: String)(work : => Unit) {
     val progress = ProgressDialog.show(this, "", message, true)
     AsyncTask(work, progress.dismiss)
