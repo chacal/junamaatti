@@ -9,7 +9,9 @@ class MainActivity extends Activity with HttpUtils {
     setContentView(R.layout.main)
 
     withProgress("Loading timetable...") {
-      httpGet("http://www.omatlahdot.fi/omatlahdot/web?stopid=E1058&command=quicksearch&view=mobile")
+      val data = httpGet("http://www.omatlahdot.fi/omatlahdot/web?stopid=E1058&command=quicksearch&view=mobile")
+      val timeTable = new TimetableParser().parse(data)
+      println(timeTable)
     }
   }
 
