@@ -18,7 +18,7 @@ class TimetableParserSpecs extends Specification {
     }
     "parse correct times" in {
       val rows = new TimetableParser().parse(getInput).rows
-      List("15:12", "15:25", "15:42", "15:55", "16:12", "16:25", "16:42", "16:55", "17:12", "17:15").zip(rows).foreach(pair => pair._1 mustEqual pair._2.departure)
+      List("15:12", "15:25", "15:42", "15:55", "16:12", "16:25", "16:42", "16:55", "17:12", "17:15").zip(rows).foreach(pair => pair._1 mustEqual pair._2.time)
     }
     "parse correct destination" in {
       val rows = new TimetableParser().parse(getInput).rows

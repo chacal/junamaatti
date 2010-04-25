@@ -18,6 +18,6 @@ class TimetableParser {
 case class Station(name: String) {
   override def toString = name
 }
-case class TimetableRow(train: String, departure: String, destination: String)
+case class TimetableRow(train: String, time: String, destination: String)
 
 case class Timetable(station: Station, rows: List[TimetableRow])
