@@ -59,7 +59,9 @@ class MainActivity extends ListActivity with HttpUtils with ProgressDialogs with
   }
 
   def renderTimetable(table: Timetable) {
-    findViewById(R.id.station_name).asInstanceOf[TextView].setText(table.station.name)
+    val stationText = findViewById(R.id.station_name).asInstanceOf[TextView]
+    stationText.setText(table.station.name)
+    stationText.setVisibility(View.VISIBLE)
     val adapter = getListAdapter.asInstanceOf[TimetableListAdapter]
     table.rows.foreach(adapter.add)
   }

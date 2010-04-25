@@ -1,8 +1,8 @@
 <manifest
         android:versionName="0.1" android:versionCode="1" package="fi.jihartik.androidtest" xmlns:android="http://schemas.android.com/apk/res/android">
   <uses-sdk android:minSdkVersion="7"></uses-sdk>
-  <application android:label="AndroidTest">
-    <activity android:label="AndroidTest" android:name=".MainActivity">
+  <application android:icon="@drawable/vr_logo" android:label="JunaMaatti" android:theme="@android:style/Theme.NoTitleBar">
+    <activity android:label="JunaMaatti" android:name=".MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"></action>
         <category android:name="android.intent.category.LAUNCHER"></category>
