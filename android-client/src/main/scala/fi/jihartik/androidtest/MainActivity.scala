@@ -10,7 +10,9 @@ import android.content.{DialogInterface, Context}
 import java.util.Locale
 import scala.None
 
-class MainActivity extends ListActivity with HttpUtils with ProgressDialogs {
+class MainActivity extends ListActivity with HttpUtils with ProgressDialogs with LocationUtils with NullHandling {
+
+  var timetableParser = new TimetableParser
 
   override def onCreate(savedInstanceState: Bundle) = {
     super.onCreate(savedInstanceState)
@@ -18,51 +20,53 @@ class MainActivity extends ListActivity with HttpUtils with ProgressDialogs {
     setContentView(R.layout.main)
     setListAdapter(new TimetableListAdapter(this, R.id.station_name))
 
+    loadTimetableOrShowCached
+  }
+
+  def loadTimetableOrShowCached {
+    nullOption(getLastNonConfigurationInstance.asInstanceOf[TimetableParser]) match {
+      case Some(parser) if(parser.getCachedData.isDefined) => {
+        timetableParser = parser
+        renderTimetable(parser.getCachedData.get)
+      }
+      case _ => loadAndShowTimetableForCurrentLocation
+    }
+  }
+
+  override def onRetainNonConfigurationInstance = timetableParser
+
+  def loadAndShowTimetableForCurrentLocation {
     withProgressAndResult("Getting location...") {
       getCurrentAddress
     } { address =>
       address match {
-        case Some(_) => showTimetable(address.get)
-        case _ => showLocationFailedMessage
+        case Some(a) => loadAndShowTimetable(a)
+        case _ => showMessage("Location not available.")
       }
     }
   }
 
-  def getCurrentAddress = {
-    try {
-      val loc = getSystemService(Context.LOCATION_SERVICE).asInstanceOf[LocationManager].getLastKnownLocation("network")
-      new Geocoder(this).getFromLocation(loc.getLatitude, loc.getLongitude, 1).toList.firstOption
-    } catch {
-      case _ => None
-    }
-  }
-
-  def showTimetable(addr: Address) {
+  def loadAndShowTimetable(addr: Address) {
     withProgressAndResult("Loading timetable...") {
-      val data = httpGet("http://www.omatlahdot.fi/omatlahdot/web?stopid=" + resolveStopId(addr) + "&command=quicksearch&view=mobile")
-      new TimetableParser().parse(data)
+      val data = httpGet("http://www.omatlahdot.fi/omatlahdot/web?stopid=" + timetableParser.resolveStopId(addr) + "&command=quicksearch&view=mobile")
+      timetableParser.parse(data)
     } { table =>
-      findViewById(R.id.station_name).asInstanceOf[TextView].setText(table.station.name)
-      val adapter = getListAdapter.asInstanceOf[TimetableListAdapter]
-      table.rows.foreach(adapter.add)
+      table match {
+        case Some(t) => renderTimetable(t)
+        case None => showMessage("Timetable not available.")
+      }
     }
   }
 
-  def showLocationFailedMessage {
-    val builder = new AlertDialog.Builder(this).setMessage("Location not available.")
-    builder.setNeutralButton("OK", null).show
-  }
-
-  def resolveStopId(addr: Address) = {
-    addr.getLocality.contains("Espoo") match {
-      case true => "E1058"  // Leppävaara/VR
-      case false => "0070"  // Helsinki/VR
-    }
+  def renderTimetable(table: Timetable) {
+    findViewById(R.id.station_name).asInstanceOf[TextView].setText(table.station.name)
+    val adapter = getListAdapter.asInstanceOf[TimetableListAdapter]
+    table.rows.foreach(adapter.add)
   }
 }
 
 class TimetableListAdapter(ctx: Context, textViewResource: Int)
-        extends ArrayAdapter[TimetableRow](ctx, textViewResource) {
+        extends ArrayAdapter[TimetableRow](ctx, textViewResource) with NullHandling {
 
   override def getView(position: Int, convertView: View, parent: ViewGroup) = {
     def inflateLayoutFromXml = LayoutInflater.from(ctx).inflate(R.layout.timetable_row_item, parent, false)
@@ -73,6 +77,19 @@ class TimetableListAdapter(ctx: Context, textViewResource: Int)
     layout.findViewById(R.id.destination).asInstanceOf[TextView].setText(getItem(position).destination)
     layout
   }
+}
 
+trait NullHandling {
   def nullOption[T](value: T) = if(value != null) Some(value) else None
+}
+
+trait LocationUtils extends Context {
+  def getCurrentAddress = {
+    try {
+      val loc = getSystemService(Context.LOCATION_SERVICE).asInstanceOf[LocationManager].getLastKnownLocation("network")
+      new Geocoder(this).getFromLocation(loc.getLatitude, loc.getLongitude, 1).toList.firstOption
+    } catch {
+      case _ => None
+    }
+  }
 }

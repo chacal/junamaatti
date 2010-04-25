@@ -1,7 +1,7 @@
 package fi.jihartik.androidtest
 
-import android.app.ProgressDialog
 import android.content.Context
+import android.app.{AlertDialog, ProgressDialog}
 
 
 trait ProgressDialogs extends Context {
@@ -17,4 +17,9 @@ trait ProgressDialogs extends Context {
       callback(result)
     })
   }
+
+  def showMessage(message: String) {
+    val builder = new AlertDialog.Builder(this).setMessage(message)
+    builder.setNeutralButton("OK", null).show
+  }  
 }
