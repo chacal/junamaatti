@@ -9,8 +9,9 @@ import android.location.{Address, Geocoder, Location, LocationManager}
 import android.content.{DialogInterface, Context}
 import java.util.Locale
 import scala.None
+import android.util.Log
 
-class MainActivity extends ListActivity with HttpUtils with ProgressDialogs with LocationUtils with NullHandling {
+class MainActivity extends ListActivity with HttpUtils with ProgressDialogs with LocationUtils with NullHandling with ExceptionHandling {
 
   var timetableParser = new TimetableParser
 
@@ -48,8 +49,10 @@ class MainActivity extends ListActivity with HttpUtils with ProgressDialogs with
 
   def loadAndShowTimetable(addr: Address) {
     withProgressAndResult("Loading timetable...") {
-      val data = httpGet("http://www.omatlahdot.fi/omatlahdot/web?stopid=" + timetableParser.resolveStopId(addr) + "&command=quicksearch&view=mobile")
-      timetableParser.parse(data)
+      withExceptionHandling("Error while fetching timetable.", None, {
+        val data = httpGet("http://www.omatlahdot.fi/omatlahdot/web?stopid=" + timetableParser.resolveStopId(addr) + "&command=quicksearch&view=mobile")
+        timetableParser.parse(data)
+      })
     } { table =>
       table match {
         case Some(t) => renderTimetable(t)
@@ -81,17 +84,29 @@ class TimetableListAdapter(ctx: Context, textViewResource: Int)
   }
 }
 
+
+trait LocationUtils extends Context with ExceptionHandling {
+  def getCurrentAddress = {
+    withExceptionHandling("Error while retrieving current location.", None, {
+      val loc = getSystemService(Context.LOCATION_SERVICE).asInstanceOf[LocationManager].getLastKnownLocation("network")
+      new Geocoder(this, Locale.getDefault).getFromLocation(loc.getLatitude, loc.getLongitude, 1).toList.firstOption
+    })
+  }
+}
+
 trait NullHandling {
   def nullOption[T](value: T) = if(value != null) Some(value) else None
 }
 
-trait LocationUtils extends Context {
-  def getCurrentAddress = {
+trait ExceptionHandling {
+  def withExceptionHandling[T](logMessage: String, defaultValue: T, func: => T) = {
     try {
-      val loc = getSystemService(Context.LOCATION_SERVICE).asInstanceOf[LocationManager].getLastKnownLocation("network")
-      new Geocoder(this).getFromLocation(loc.getLatitude, loc.getLongitude, 1).toList.firstOption
+      func
     } catch {
-      case _ => None
+      case e => {
+        Log.d("Error", logMessage, e)
+        defaultValue
+      }
     }
   }
 }
