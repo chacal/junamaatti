@@ -49,10 +49,10 @@ class MainActivity extends ListActivity with HttpUtils with ProgressDialogs with
 
   def loadAndShowTimetable(addr: Address) {
     withProgressAndResult("Loading timetable...") {
-      withExceptionHandling("Error while fetching timetable.", None, {
+      withExceptionHandling("Error while fetching timetable.", None) {
         val data = httpGet("http://www.omatlahdot.fi/omatlahdot/web?stopid=" + timetableParser.resolveStopId(addr) + "&command=quicksearch&view=mobile")
         timetableParser.parse(data)
-      })
+      }
     } { table =>
       table match {
         case Some(t) => renderTimetable(t)
@@ -87,10 +87,10 @@ class TimetableListAdapter(ctx: Context, textViewResource: Int)
 
 trait LocationUtils extends Context with ExceptionHandling {
   def getCurrentAddress = {
-    withExceptionHandling("Error while retrieving current location.", None, {
+    withExceptionHandling("Error while retrieving current location.", None) {
       val loc = getSystemService(Context.LOCATION_SERVICE).asInstanceOf[LocationManager].getLastKnownLocation("network")
       new Geocoder(this, Locale.getDefault).getFromLocation(loc.getLatitude, loc.getLongitude, 1).toList.firstOption
-    })
+    }
   }
 }
 
@@ -99,7 +99,7 @@ trait NullHandling {
 }
 
 trait ExceptionHandling {
-  def withExceptionHandling[T](logMessage: String, defaultValue: T, func: => T) = {
+  def withExceptionHandling[T](logMessage: String, defaultValue: Option[T])(func: => Option[T]) = {
     try {
       func
     } catch {
