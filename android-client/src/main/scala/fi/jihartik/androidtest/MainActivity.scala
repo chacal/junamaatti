@@ -1,17 +1,18 @@
 package fi.jihartik.androidtest
 
 import android.os.Bundle
-import android.view.{LayoutInflater, ViewGroup, View, Window}
 import scala.collection.jcl.Conversions._
 import android.widget._
-import android.app.{AlertDialog, ListActivity}
 import android.location.{Address, Geocoder, Location, LocationManager}
 import android.content.{DialogInterface, Context}
 import java.util.Locale
 import scala.None
 import android.util.Log
+import android.view._
+import android.app.{Activity, AlertDialog, ListActivity}
 
-class MainActivity extends ListActivity with HttpUtils with ProgressDialogs with LocationUtils with NullHandling with ExceptionHandling {
+class MainActivity extends ListActivity with OptionsMenu with HttpUtils with ProgressDialogs
+        with LocationUtils with NullHandling with ExceptionHandling {
 
   var timetableParser = new TimetableParser
 
@@ -66,6 +67,7 @@ class MainActivity extends ListActivity with HttpUtils with ProgressDialogs with
     stationText.setText(table.station.name)
     stationText.setVisibility(View.VISIBLE)
     val adapter = getListAdapter.asInstanceOf[TimetableListAdapter]
+    adapter.clear
     table.rows.foreach(adapter.add)
   }
 }
@@ -84,6 +86,18 @@ class TimetableListAdapter(ctx: Context, textViewResource: Int)
   }
 }
 
+trait OptionsMenu extends Activity {
+  self : MainActivity =>
+  override def onCreateOptionsMenu(menu: Menu) = {
+    getMenuInflater.inflate(R.menu.options_menu, menu)
+    true
+  }
+
+  override def onOptionsItemSelected(item: MenuItem) = {
+    loadAndShowTimetableForCurrentLocation
+    true
+  }
+}
 
 trait LocationUtils extends Context with ExceptionHandling {
   def getCurrentAddress = {
