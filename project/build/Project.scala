@@ -12,6 +12,8 @@ class Project(info: ProjectInfo) extends ParentProject(info) with IdeaPlugin {
 
   class AndroidTestsProject(info: ProjectInfo) extends AndroidTestProject(info) with CommonConfig {
     val specs = "org.scala-tools.testing" % "specs" % "1.6.2"
+    val easymock = "org.easymock" % "easymock" % "2.0"
+    val easymockExtensions = "org.easymock" % "easymockclassextension" % "2.2.2"
   }
 }
 

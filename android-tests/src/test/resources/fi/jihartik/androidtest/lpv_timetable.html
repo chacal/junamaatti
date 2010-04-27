@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN"
+"http://www.openmobilealliance.org/tech/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>VR</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<style type="text/css">
+	body,p,td,th {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 1.0em;
+	margin: 0px;
+	text-align: left;
+}
+
+body {
+	background-color: #FFFFFF;
+	color: #000000;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.italic {
+	font-style: italic;
+}
+
+table.layout {
+	border: 0px;
+	max-width: 600px;
+	width: 100%;
+}
+
+/* Linkit */
+a {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+    text-decoration: underline;
+    color: #0BAE02;
+    font-weight: bold;
+}
+
+a:hover, a:active {
+	text-decoration: none;
+	color: #a7de79;
+	font-weight: bold;
+}
+
+a:visited {
+    color: #a5acaf;
+}
+
+a.banner,a.banner:active,a.banner:visited {
+	color: #FFFFFF;
+}
+
+a.banner:hover {
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+
+
+/* Luokat */
+td.search {
+	padding-bottom: 2px;
+	padding-top: 2px;
+	padding-left: 0px;
+	padding-right: 0px;
+	text-align: left;
+	border-top: solid 1px #57A50B;
+	border-bottom: solid 1px #57A50B;
+	border-left: solid 1px #FFFFFF;
+	border-right: solid 1px #FFFFFF;
+}
+
+table.errors {
+	width: 100%;
+	padding: 4px;
+	border: solid 1px #CC0000;
+	background-color: #FFFFFF;
+}
+
+/** Haku */
+table.haku {
+	width: 100%;
+}
+
+table.haku td.first {
+	width: 40%;
+	background-color: #57A50B;
+	font-weight: bold;
+	font-size: 0.8em;
+	color: white;
+	padding-left: 2px;
+	padding-bottom: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	text-align: left;
+}
+
+table.haku td.second {
+	width: 60%;
+	padding: 0px;
+}
+
+table.haku td.second input.field {
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+table.haku td.second select.field {
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+/* Kulkutiedot */
+table.kulkutiedot {
+	width: 100%;
+	margin: 10px 0px 0px 0px;
+	border-spacing: 0px;
+	border-collapse: collapse;
+	font-size: 0.9em;
+}
+
+table.kulkutiedot_footer {
+	margin: 0px 0px 10px 0px;
+	border-spacing: 0px;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+table.kulkutiedot tr.table_header th.border {
+	background-color: #57A50B;
+	color: #FFFFFF;
+	border: solid 1px #FFFFFF;
+	padding: 2px;
+}
+
+table.kulkutiedot tr.table_header th.border_juna {
+	background-color: #57A50B;
+	color: #FFFFFF;
+	border: solid 1px #FFFFFF;
+	padding: 2px;
+}
+
+table.kulkutiedot tr.table_header th.border_no_right {
+	background-color: #57A50B;
+	color: #FFFFFF;
+	border-bottom: solid 1px #FFFFFF;
+	border-top: solid 1px #FFFFFF;
+	padding: 2px;
+}
+
+table.kulkutiedot tr td {
+	vertical-align: top;
+}
+
+table.kulkutiedot tr.even {
+	background-color: #E4E4E4;
+}
+
+table.kulkutiedot tr.odd {
+	background-color: #FFFFFF;
+}
+
+table.kulkutiedot tr.even td {
+	border: none;
+}
+
+table.kulkutiedot tr.odd td {
+	border: none;
+}
+
+table.kulkutiedot tr.even td.first_border {
+	border-left: solid 1px #FFFFFF;
+	border-right: solid 1px #FFFFFF;
+}
+
+table.kulkutiedot tr.odd td.first_border {
+	border-left: solid 1px #FFFFFF;
+	border-right: solid 1px #E4E4E4;
+}
+
+table.kulkutiedot tr.even td.left_border {
+	border-left: solid 1px #FFFFFF;
+}
+
+table.kulkutiedot tr.odd td.left_border {
+	border-left: solid 1px #FFFFFF;
+}
+
+
+table.kulkutiedot tr.even td.border {
+	border-right: solid 1px #FFFFFF;
+}
+
+table.kulkutiedot tr.odd td.border {
+	border-right: solid 1px #E4E4E4;
+}
+
+table.kulkutiedot tr.even td.last_border {
+	border-right: solid 1px #FFFFFF;
+}
+
+table.kulkutiedot tr.odd td.last_border {
+	border-right: solid 1px #FFFFFF;
+}
+
+/* Muut */
+th.otsikko {
+	font-weight: bold;
+}
+
+td.error {
+	color: #CC0000;
+	font-weight: bold;
+	font-size: 1.5em;
+	padding-right: 4px;
+}
+
+td.normal {
+	font-weight: normal;
+}
+
+/** Mobile lisäykset */
+h1 {
+	color: #57a50b;
+	font-size: 1.0em;
+	font-weight: bold;
+	text-decoration: none;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	margin-left: 0.0em;
+}
+
+h2 {
+	color: #57a50b;
+	font-size: 0.9em;
+	font-weight: bold;
+	text-decoration: none;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	margin-left: 0.0em;
+}
+
+.header {
+	width: 100%;
+	clear: both;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.content
+{
+    width: 100%;
+    clear: both;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 0.9em;
+    padding: 3px;
+}
+
+.saapuminen {
+	font-weight: bold;
+	color: green;
+ 	text-align: right;
+ 	vertical-align: middle;
+
+}
+
+.palkki{
+	height: 22px;
+}
+
+.navi {
+	 font-size:0.8em;
+}
+
+.navi_linkit {
+	padding: 3px;
+}
+
+.navi_linkit a, .navi_linkit a:visited, .navi_linkit a:hover {
+    font-weight: normal;
+}
+
+#footer {
+    clear: both;
+    padding-top: 30px;
+}
+#footerwrap {
+    float: left;
+    background: transparent url(../images/footer_bg_popup.jpg) no-repeat top left;
+    width: 100%;
+}
+#footerlinks-and-copyright {
+    float: right;
+    width: 300px;
+    margin: 0;
+    padding: 15px;
+    text-align: right;
+    color: #0bae02;
+}
+#copyright {
+    color: #000000;
+    font-size: 11px;
+}
+
+#wrapper {
+    max-width:600px;
+}
+</style>
+</head>
+
+<body>
+<div id="wrapper">
+<div class="header">
+    <img src="/juku/images/vr_logo_mobile.gif" alt="VR"  />
+</div>
+
+<table class="layout">
+	<tr>
+		<td valign="top">
+
+
+
+
+
+<div id="content">
+<h1>Lähtevät ja saapuvat junat</h1>
+
+<!-- Asemalta lahtevien junien kulkutiedot -->
+<table class="kulkutiedot" >
+  <tr class="table_header">
+    <th class="border" colspan="6">
+      Leppävaara, lähtevät junat
+    </th>
+
+  </tr>
+  <tr class="table_header">
+    <th class="border_juna">
+      Juna
+    </th>
+    <th class="border">
+      Aika-<br/>taulu
+    </th>
+    <th class="border">
+
+      Lähti
+    </th>
+    <th class="border">
+      Arvio
+    </th>
+    <th class="border">
+      Pääte-<br/>asema
+    </th>
+    <th class="border">
+      !
+    </th>
+
+  </tr>
+
+  <tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8391&amp;junalaji=LL&amp;lang=fi">E</a></td>
+<td class="border">21:01</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Kauklahti</td>
+<td class="last_border"></td>
+</tr>
+<tr class="odd">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8573&amp;junalaji=LL&amp;lang=fi">S</a></td>
+
+<td class="border">21:20</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Kirkkonummi</td>
+<td class="last_border"></td>
+</tr>
+<tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8393&amp;junalaji=LL&amp;lang=fi">E</a></td>
+<td class="border">21:31</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Kauklahti</td>
+
+<td class="last_border"></td>
+</tr>
+<tr class="odd">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8292&amp;junalaji=LL&amp;lang=fi">A</a></td>
+<td class="border">21:50</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8577&amp;junalaji=LL&amp;lang=fi">U</a></td>
+<td class="border">21:50</td>
+
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Kirkkonummi</td>
+<td class="last_border"></td>
+</tr>
+<tr class="odd">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8566&amp;junalaji=LL&amp;lang=fi">S</a></td>
+<td class="border">21:55</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+
+<tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8394&amp;junalaji=LL&amp;lang=fi">E</a></td>
+<td class="border">22:10</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="odd">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8294&amp;junalaji=LL&amp;lang=fi">A</a></td>
+<td class="border">22:12</td>
+<td class="border bold">&#160;</td>
+
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8583&amp;junalaji=LL&amp;lang=fi">S</a></td>
+<td class="border">22:20</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Kirkkonummi</td>
+<td class="last_border"></td>
+</tr>
+<tr class="odd">
+
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8574&amp;junalaji=LL&amp;lang=fi">U</a></td>
+<td class="border">22:25</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8296&amp;junalaji=LL&amp;lang=fi">A</a></td>
+<td class="border">22:42</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="odd">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8587&amp;junalaji=LL&amp;lang=fi">U</a></td>
+<td class="border">22:50</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Kirkkonummi</td>
+<td class="last_border"></td>
+</tr>
+<tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8578&amp;junalaji=LL&amp;lang=fi">S</a></td>
+
+<td class="border">22:55</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+
+</table>
+
+<table class="kulkutiedot_footer">
+  <tr>
+    <td colspan="8" class="search">
+      <a href="/juku/mobile/haku.action?lang=fi&amp;junalaji=LL&amp;asematunnus=LPV">Uusi haku</a>
+
+    </td>
+  </tr>
+</table>
+
+<!-- Asemalle saapuvien junien kulkutiedot -->
+<table class="kulkutiedot" >
+  <tr class="table_header">
+    <th class="border" colspan="6">
+      Leppävaara, saapuvat junat
+    </th>
+  </tr>
+
+  <tr class="table_header">
+    <th class="border_juna">
+      Juna
+    </th>
+    <th class="border">
+      Aika-<br/>taulu
+    </th>
+    <th class="border">
+      Saapui
+    </th>
+
+    <th class="border">
+      Arvio
+    </th>
+    <th class="border">
+      Lähtö-<br/>asema
+    </th>
+    <th class="border">
+      !
+    </th>
+  </tr>
+
+
+  <tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8391&amp;junalaji=LL&amp;lang=fi">E</a></td>
+<td class="border">21:01</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="odd">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8285&amp;junalaji=LL&amp;lang=fi">A</a></td>
+<td class="border">21:10</td>
+
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8573&amp;junalaji=LL&amp;lang=fi">S</a></td>
+<td class="border">21:20</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+
+<tr class="odd">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8393&amp;junalaji=LL&amp;lang=fi">E</a></td>
+<td class="border">21:31</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8291&amp;junalaji=LL&amp;lang=fi">A</a></td>
+<td class="border">21:40</td>
+<td class="border bold">&#160;</td>
+
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="odd">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8577&amp;junalaji=LL&amp;lang=fi">U</a></td>
+<td class="border">21:50</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="even">
+
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8566&amp;junalaji=LL&amp;lang=fi">S</a></td>
+<td class="border">21:55</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Kirkkonummi</td>
+<td class="last_border"></td>
+</tr>
+<tr class="odd">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8293&amp;junalaji=LL&amp;lang=fi">A</a></td>
+<td class="border">22:05</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8394&amp;junalaji=LL&amp;lang=fi">E</a></td>
+<td class="border">22:10</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Kauklahti</td>
+<td class="last_border"></td>
+</tr>
+<tr class="odd">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8583&amp;junalaji=LL&amp;lang=fi">S</a></td>
+
+<td class="border">22:20</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8574&amp;junalaji=LL&amp;lang=fi">U</a></td>
+<td class="border">22:25</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Kirkkonummi</td>
+
+<td class="last_border"></td>
+</tr>
+<tr class="odd">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8295&amp;junalaji=LL&amp;lang=fi">A</a></td>
+<td class="border">22:35</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="even">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8587&amp;junalaji=LL&amp;lang=fi">U</a></td>
+<td class="border">22:50</td>
+
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Helsinki</td>
+<td class="last_border"></td>
+</tr>
+<tr class="odd">
+<td class="first_border"><a class="lahi"  href="/juku/mobile/juna.action?junanro=8578&amp;junalaji=LL&amp;lang=fi">S</a></td>
+<td class="border">22:55</td>
+<td class="border bold">&#160;</td>
+<td class="border italic">&#160;</td>
+<td class="border">Kirkkonummi</td>
+<td class="last_border"></td>
+</tr>
+
+
+</table>
+
+<table class="kulkutiedot_footer">
+  <tr>
+    <td class="search">
+
+
+      <a href="/juku/mobile/haku.action?lang=fi&amp;junalaji=LL&amp;asematunnus=LPV">Uusi haku</a>
+    </td>
+  </tr>
+  <tr>
+
+    <td class="footer"><span class="middle">
+      Pidätämme oikeuden muutoksiin.</span>
+     </td>
+  </tr>
+</table>
+
+</div></td>
+	</tr>
+</table>
+
+
+<div class="navi_linkit">
+<br />
+<a class="navi" href="http://service.vr.fi/ticket/mobile/index.jsp?setLanguage=FIN">Matkahaku &raquo;</a><br /><br />
+<a class="navi" href="http://service.vr.fi/juha/internet/mobile/mobiletiedote.action?lang=fi ">Liikennetiedotteet &raquo;</a><br /><br />
+<a class="navi" href="http://service.vr.fi/asemantiedot/goto.do?toiminto=selailu&#38;language=fi&#38;client=mobile ">Asemien palvelut  &raquo;</a><br /><br />
+</div>
+<div id="footer">
+    <div id="footerwrap">
+        <div id="footerlinks-and-copyright">
+            <span id="copyright">&#160;&#169; VR-Yhtymä Oy&#160;2010</span>
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

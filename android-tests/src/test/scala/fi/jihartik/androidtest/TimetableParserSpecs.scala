@@ -2,30 +2,43 @@ package fi.jihartik.androidtest
 
 import org.specs.Specification
 import org.apache.commons.io.IOUtils
+import android.location.Address
+import org.specs.mock.EasyMock
 
-class TimetableParserSpecs extends Specification with ExceptionHandling {
+object TimetableParserSpecs extends Specification with ExceptionHandling with EasyMock {
 
   "Any parser" should {
     "parse station" in {
-      new TimetableParser().parse(getInput).get.station.name mustEqual "Leppävaara/VR (E1058)"
+      new TimetableParser().parse(getInput, addressIn("Leppävaara")).get.station.name mustEqual "Leppävaara"
     }
     "parse correct amount of rows" in {
-      new TimetableParser().parse(getInput).get.rows.size mustEqual 10
+      lpvRows.size mustEqual 7
     }
     "parse correct trains" in {
-      val rows = new TimetableParser().parse(getInput).get.rows
-      List("A", "U", "A", "S", "A", "U", "A", "S", "A", "Y").zip(rows).foreach(pair => pair._1 mustEqual pair._2.train)
+      lpvRows.map(_.train) must containInOrder(List("A", "S", "E", "A", "U", "A", "S"))
     }
     "parse correct times" in {
-      val rows = new TimetableParser().parse(getInput).get.rows
-      List("15:12", "15:25", "15:42", "15:55", "16:12", "16:25", "16:42", "16:55", "17:12", "17:15").zip(rows).foreach(pair => pair._1 mustEqual pair._2.time)
+      lpvRows.map(_.time) must containInOrder(List("21:50", "21:55", "22:10", "22:12", "22:25", "22:42", "22:55"))
     }
     "parse correct destination" in {
-      val rows = new TimetableParser().parse(getInput).get.rows
-      1.until(10).map(i => "Helsinki").toList.zip(rows).foreach(pair => pair._1 mustEqual pair._2.destination)
+      lpvRows.forall(_.destination == "Helsinki")
+    }
+    "return empty list if source has no trains" in {
+      new TimetableParser().parse(getInput("no_trains_timetable.html"), addressIn("Espoo")).get.rows mustEqual Nil
+    }
+    "return only trains to Leppävaara at Helsinki" in {
+      val rows = new TimetableParser().parse(getInput("hkl_timetable.html"), addressIn("Helsinki")).get.rows
+      rows.size mustEqual 7
+      rows.map(_.train) must containInOrder(List("A", "Y", "S", "L", "E", "A", "U"))
     }
   }
 
-  def getInput : String = getInput("timetable.html")
-  def getInput(filename: String) = IOUtils.toString(getClass.getResourceAsStream("timetable.html"), "ISO-8859-1")
+  def lpvRows = new TimetableParser().parse(getInput, addressIn("Espoo")).get.rows
+  def getInput : String = getInput("lpv_timetable.html")
+  def getInput(filename: String) = IOUtils.toString(getClass.getResourceAsStream(filename), "UTF-8")
+  def addressIn(locality: String) = {
+    val addr = mock[Address]
+    expect { addr.getLocality stubReturns locality }
+    addr
+  }
 }

@@ -51,8 +51,8 @@ class MainActivity extends ListActivity with OptionsMenu with HttpUtils with Pro
   def loadAndShowTimetable(addr: Address) {
     withProgressAndResult("Loading timetable...") {
       2.triesWithExceptionHandling("Error while fetching timetable.") {
-        val data = httpGet("http://www.omatlahdot.fi/omatlahdot/web?stopid=" + timetableParser.resolveStopId(addr) + "&command=quicksearch&view=mobile")
-        timetableParser.parse(data)
+        val data = httpGet("http://service.vr.fi/juku/mobile/asema.action?lang=fi&junalaji=LL&asema=" + timetableParser.resolveStopId(addr))
+        timetableParser.parse(data, addr)
       }
     } { table =>
       table match {
